@@ -1,6 +1,6 @@
 const dialogflow = require('dialogflow');
 const uuid = require('uuid');
-const credentials = require("C:\\Users\\79889\\Desktop\\server\\vasilisa-bnyu-4f8fbac1f325.json");
+const credentials = require("vasilisa-bnyu-4f8fbac1f325.json");
 const express = require('express');
 
 async function runSample(messageText,projectId = 'vasilisa-bnyu') {
