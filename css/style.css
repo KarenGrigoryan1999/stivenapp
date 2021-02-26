@@ -1,0 +1,116 @@
+#debugArea{
+    background-color: black;
+    color:white;
+    font-family: 'Courier New', Courier, monospace;
+    width: 99%;
+    height: 99%;
+    font-size: 18px;
+    resize: none;
+}
+#codeField{
+    visibility:hidden;
+    display: inline-block;
+    width: 100%;
+    height: 80vh;
+    position: relative;
+}
+#codePanel{
+    float: left;
+    width: 100%;
+    height: 10vh;
+    position: relative;
+}
+.button{
+    width: 140px;
+    margin-top: 17px;
+    padding: 5px;
+    font-size: 18px;
+    margin-left: 2px;
+    float: left;
+}
+h3{
+    font-size: 18px;
+    margin: auto;
+    font-family: Andale Mono, monospace;
+    padding-left: 5px;
+}
+#leftPanel{
+    float: left;
+    width: 45%;
+    position: absolute;
+    height: 100%;
+    min-width: 200px;
+}
+.authorisation-login, .authorisation-id{
+    margin-left: 5px;
+    float: left;
+    margin-top: 17px;
+    padding: 5px;
+    font-size: 18px;
+    margin-left: 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(158,158,158);
+}
+.authorisation-id{
+    background-color: rgb(189,189,189);
+}
+#splitter
+{
+  width:10px;
+  background-color:silver;
+  float:left;
+  height:100%;
+  padding-top: 22px;
+  cursor:w-resize;
+  position: absolute;
+}
+.compilation{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:rgb(0, 0, 0);
+    outline: none;
+}
+.compilation:hover{
+    background:rgb(189,189,189);
+}
+.compilation:active{
+    background:rgb(117,117,118);
+}
+.saving{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:rgb(0, 0, 0);
+    outline: none;
+}
+.saving:hover{
+    background:rgb(189,189,189);
+}
+.saving:active{
+    background:rgb(117,117,118);
+}
+.sending{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:rgb(0, 0, 0);
+    outline: none;
+}
+.sending:hover{
+    background:rgb(189,189,189);
+}
+.sending:active{
+    background:rgb(117,117,118);
+}
+.window-header{
+    background: linear-gradient(to top left, silver, white);
+}
+#canvas{
+    width: 99%;
+    height: 99%;
+}
+#turl{
+    width: 99%;
+    height: 99%;
+}
