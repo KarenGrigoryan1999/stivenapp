@@ -15,7 +15,7 @@ def inputTextReplaceFunction(getinputstring):
 $code = $firstCode.$_POST["data"];
 $id = $_POST['id'];
 file_put_contents("codes/$id.py",$code);
-$command = escapeshellcmd(__DIR__."/codes/$id.py ".$_POST['param']);
+$command = escapeshellcmd("python3 ".__DIR__."/codes/$id.py ".$_POST['param']);
 exec($command,$output,$out);
 $output[count($output)] = $out;
 $output = json_encode($output);

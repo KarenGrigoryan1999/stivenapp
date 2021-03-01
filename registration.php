@@ -1,5 +1,5 @@
 <?php 
-    $mysqli = new mysqli("localhost", "root", "kintouri99", "codeschool");
+    $mysqli = new mysqli("localhost", "root", "1234567890", "codeschool");
     if(isset($_POST['login']) && isset($_POST['password']) && isset($_POST['password2']) && isset($_POST['email'])){
         $error = false;
         $login = $_POST['login'];

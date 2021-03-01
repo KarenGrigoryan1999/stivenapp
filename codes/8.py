@@ -11,12 +11,4 @@ def inputTextReplaceFunction(getinputstring):
         print(sys.argv[arg_counter])#
         return sys.argv[arg_counter]       
 
-import turtle
-t = turtle.Turtle(10,True)
-a = 2
-while a > 0:
-    t.right(100)
-    t.down(100)
-    t.left(100)
-    t.up(100)
-    a-=1
+print("fddf\nfddf\nfddf")a=inputTextReplaceFunction("d")

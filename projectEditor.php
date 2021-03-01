@@ -1,5 +1,5 @@
 <?php 
-$mysqli = new mysqli("localhost", "root", "kintouri99", "codeschool");
+$mysqli = new mysqli("localhost", "root", "1234567890", "codeschool");
 if(!isset($_POST['login'])|| !isset($_POST['password'])){
   die("Нет данных!");
 }
@@ -36,7 +36,7 @@ setcookie("password",$_POST['password'],time()+60*60*24*30,"/");
     '''Добро пожаловать в редактор кода!<br>Мы создали его чтобы тебе легче было проверять работоспособность своего говнокода<br>'''<br>print("hello world")
     </p></div>
     <div id="splitter"></div>
-    <div id = "rightPanel" style = "width:42%;height:100%;display:block;float: left;position: absolute;min-width: 200px;">
+    <div id = "rightPanel">
     <div class = "window-header">
       <h3>Окно консоли</h3>
     </div>
@@ -53,7 +53,7 @@ setcookie("password",$_POST['password'],time()+60*60*24*30,"/");
 </div>
 <div id = "codePanel">
     <?php
-    echo "<button id = 'start' class = 'button compilation' onclick = 'buttonStartClick($id)'><img src = '/img/start.webp' width = '16px' style = 'padding-right:4px'>Пуск</button>";
+    echo "<button id = 'start' class = 'button compilation' onclick = 'clickOnByttonStart($id)'><img src = '/img/start.webp' width = '16px' style = 'padding-right:4px'>Пуск</button>";
     echo "<button id = 'save' class = 'button saving' onclick = 'buttonSaveClick($id)'><img src = '/img/save.webp' width = '16px' style = 'padding-right:4px'>Сохранить</button>";
     echo "<button id = 'send' class = 'button sending' onclick = 'buttonResponseClick($id)'><img src = '/img/send.webp' width = '16px' style = 'padding-right:4px'>Сдать</button>";
     echo "<button id = 'consoleButton' class = 'button sending' onclick = 'showConsole()'><img src = '/img/console.webp' width = '16px' style = 'padding-right:4px'>Консоль</button>";

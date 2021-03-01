@@ -7,6 +7,26 @@ var codeArea = document.getElementById("codeArea");
 var debugArea = document.getElementById("debugArea");
 var argum = 0;
 
+//Функция нажатия непосредственно на кнопку
+function clickOnByttonStart(arg){
+    if($("#start").text()=="Пуск"){
+        $("#start").html("<img src = '/img/stop.webp' width = '16px' style = 'padding-right:4px'>Стоп");
+        if($("#rightPanel").css("display") == "none"){
+            $("#rightPanel").css("display","block");
+            $("#rightPanel").css("width","100%");
+            $("#rightPanel").css("margin-left","0");
+            $("#leftPanel").css("display","none");
+        }
+        buttonStartClick(arg);
+    }else{
+        ansver = "";
+        variables = "";
+        backspaceCount = 0;
+        argum = 0;
+        debugArea.value +="\n\n\n...Программа была прервана пользователем";
+        $("#start").html("<img src = '/img/start.webp' width = '16px' style = 'padding-right:4px'>Пуск");
+    }
+}
 function buttonStartClick(arg){
     argum = arg;
     var code = getCode().replace(/\u00A0/g," ").replace(/input\(/g,"inputTextReplaceFunction(");
@@ -27,18 +47,20 @@ function buttonStartClick(arg){
                 $('#debugArea').focus();
                 debugArea.setSelectionRange( debugArea.value.length-1, debugArea.value.length-1);
                 if(ansver != ""){//
-                setTimeout(() => {
+                setTimeout(function dd(ansver) {
                     //var getParam = '"'+prompt(data[data.length-2],"")+'"';                   
                     var getParam = '"'+ansver+'"';//
                     variables += getParam+" ";
                     buttonStartClick(arg);
                     ansver = "";//
                     backspaceCount = 0;//
-                },100);
+                },100,ansver);
+                ansver = "";//
             }//
             }else{
                 console.log(data);
                 go(data);
+                $("#start").html("<img src = '/img/start.webp' width = '16px' style = 'padding-right:4px'>Пуск");
                 debugArea.value +="\n\n\n...Программа была завершена с кодом 0";
                 variables = "";
             }
@@ -48,13 +70,22 @@ function buttonStartClick(arg){
 }
 $('#debugArea').keydown(function(e){
     if(e.keyCode == 13){
+        ansver = debugArea.value.slice(txt.length-1).replace("\n","").replace("\n","");
         buttonStartClick(argum);
     }
     if(e.keyCode == 8 && backspaceCount == 0){
         e.preventDefault();
     }
-    if(e.keyCode != 8){
+    if(e.keyCode != 8 && e.shiftKey == false && e.ctrlKey == false
+        && e.keyCode != 37 && e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40){
+        console.log("x");
         backspaceCount++;
+    }else{
+        var text = $(this).val();
+        if (this.selectionStart != this.selectionEnd) {
+            e.preventDefault();
+            debugArea.setSelectionRange( debugArea.value.length-1, debugArea.value.length-1);
+        }
     }
     if(e.keyCode == 8 && backspaceCount > 0){
         ansver = ansver.substring(0, ansver.length - 1);
@@ -65,8 +96,7 @@ $('#debugArea').keydown(function(e){
 $('#debugArea').keyup(function(e){
     if(e.keyCode == 13){
     //ansver = debugArea.value.replace(txt,"").replace("\n","");
-    ansver = debugArea.value.slice(txt.length-1).replace("\n","").replace("\n","");
-    console.log(variables);
+    console.log(debugArea.value);
     }
 })
 debugArea.onclick = function(){

@@ -114,3 +114,19 @@ h3{
     width: 99%;
     height: 99%;
 }
+#rightPanel{
+width:42%;
+height:100%;
+display:block;
+float: left;
+position: absolute;
+min-width: 200px;
+}
+@media screen and (max-width: 700px) {
+#rightPanel,#splitter{
+    display: none;
+}
+#leftPanel{
+    width: 100%;
+}
+}
