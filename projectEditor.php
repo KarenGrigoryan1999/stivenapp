@@ -19,7 +19,7 @@ setcookie("password",$_POST['password'],time()+60*60*24*30,"/");
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Выполнение задания - ProgramKids</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/editor.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
@@ -32,15 +32,15 @@ setcookie("password",$_POST['password'],time()+60*60*24*30,"/");
 </div>
 <div id = "codeField">
     <div id = "leftPanel">
-    <p id = "codeArea" contenteditable="true" spellcheck="false">
-    '''Добро пожаловать в редактор кода!<br>Мы создали его чтобы тебе легче было проверять работоспособность своего говнокода<br>'''<br>print("hello world")
-    </p></div>
+    <p id = "codeArea" contenteditable="true" spellcheck="false"></p>
+  </div>
     <div id="splitter"></div>
     <div id = "rightPanel">
     <div class = "window-header">
       <h3>Окно консоли</h3>
     </div>
     <canvas id = "canvas"></canvas>
+    <canvas id = "canvas2"></canvas>
     <textarea id = "debugArea" spellcheck="false"></textarea>
     </div>
     <script
@@ -49,7 +49,8 @@ setcookie("password",$_POST['password'],time()+60*60*24*30,"/");
   crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="js/editor.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>    
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/Caret.js/0.3.1/jquery.caret.min.js"></script>    
 </div>
 <div id = "codePanel">
     <?php
@@ -64,5 +65,6 @@ setcookie("password",$_POST['password'],time()+60*60*24*30,"/");
     echo "<script>loadLastSaveCode($id);</script>";
     ?>
     </div>
+    <div id = "autocomplite"></div>
 </body>
 </html>

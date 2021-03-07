@@ -12,10 +12,13 @@ function clickOnByttonStart(arg){
     if($("#start").text()=="Пуск"){
         $("#start").html("<img src = '/img/stop.webp' width = '16px' style = 'padding-right:4px'>Стоп");
         if($("#rightPanel").css("display") == "none"){
+            setTimeout(function(){
             $("#rightPanel").css("display","block");
             $("#rightPanel").css("width","100%");
             $("#rightPanel").css("margin-left","0");
             $("#leftPanel").css("display","none");
+            canvasResize();
+            },100);
         }
         buttonStartClick(arg);
     }else{
@@ -30,13 +33,30 @@ function clickOnByttonStart(arg){
 function buttonStartClick(arg){
     argum = arg;
     var code = getCode().replace(/\u00A0/g," ").replace(/input\(/g,"inputTextReplaceFunction(");
-    //console.log(code);
+    code = code.replace(/\n/g,"\n    ");
+    code = "    "+code;
+    code = "import traceback\ntry:\n"+code;
+    code += "\nexcept (ValueError,ZeroDivisionError,TypeError,SyntaxError,OSError,NameError,KeyError,IndexError,ImportError,AttributeError):";
+    code += "\n    print(\"\");print(\"\");print(\"\");print(traceback.format_exc());";
+    code += "\nelse:\n    print(\"\");print(\"\");print(\"\");print(\"request code 0\");";
     $.post("/send.php",{data:code,param:variables,id:arg},function(data,textStatus,jqXHR){
+        console.log(data);
         data = data.replace(/\[/,'');
         data = data.replace(/\]/,'');
         data = data.split(",");
         debugArea.value = "";
         for(i = 0; i < data.length-1; i++){
+            if(data[i] == "\"Traceback (most recent call last):\"" && i != 0 && data[i-1] == "\"\""){
+                data[i] = "";
+                if(i+1 < data.length)data[i+1] = "";
+                if(i+3 < data.length)data[i+3] = "";
+                if(i+4 < data.length)data[i+4] = "";
+                if(i+5 < data.length)data[i+5] = "";
+            }
+            if(data[i].match(/\sline.*?/) != null && i != 0 && data[i-1] == ""){
+                let lineNum = parseInt(data[i].replace(" line ",""))-15;
+                data[i] = "Error on line line "+lineNum;
+            };
             debugArea.value += data[i].replace(/"/g,"")+"\n";
         }
         txt = debugArea.value;
@@ -58,10 +78,9 @@ function buttonStartClick(arg){
                 ansver = "";//
             }//
             }else{
-                console.log(data);
                 go(data);
                 $("#start").html("<img src = '/img/start.webp' width = '16px' style = 'padding-right:4px'>Пуск");
-                debugArea.value +="\n\n\n...Программа была завершена с кодом 0";
+                //debugArea.value +="\n\n\n...Программа была завершена с кодом 0";
                 variables = "";
             }
         }
@@ -116,9 +135,10 @@ function loadLastSaveCode(arg){
     $.post("/getLastSaveCode.php",{id:arg},function(data,textStatus,jqXHR){
         if(data != ""){
             codeArea.innerText = data.replace(/ /g,"\u00A0");
-            console.log(codeArea.innerText);
-            codeArea.onkeyup(0);
+        }else{
+            codeArea.innerHTML = "'''Добро пожаловать в редактор кода!<br>Мы создали его чтобы тебе легче было проверять работоспособность своего говнокода<br>'''<br>print(\"hello world\")";
         }
+        codeArea.onkeyup(0);
     })
 }
 
@@ -194,9 +214,13 @@ function doSomethingUseful() {
  
  var canvas = document.getElementById("canvas");
  var cont = canvas.getContext("2d");
+ var canvas2 = document.getElementById("canvas2");
+ var context2 = canvas2.getContext("2d");
  function canvasResize(){
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+    canvas2.width = canvas2.offsetWidth;
+    canvas2.height = canvas2.offsetHeight;
  }
  canvasResize();
  var x = 10;
@@ -210,20 +234,26 @@ function doSomethingUseful() {
      animCounter = 0;
  for(var i = 0; i < path.length; i++){
     var str = path[i];
-    str = str.replace(/\"/g,'');
+    str = str.replace(/"/g,'');
     str = str.split(' ');
     for(var j = 0; j < parseInt(str[1]);j++){
         animCounter++;
         setTimeout( function timer(sstr){
-        cont.fillStyle = (sstr[3] == "True")?"gray":"white";
-        cont.fillRect(x, y, 30, 30);
+        if(sstr[3] == "True"){
+            cont.fillStyle = sstr[4];
+            cont.clearRect(x+15,y+15,1,1);
+            cont.fillRect(x+15, y+15, 1, 1);
+        }
         if(sstr[0] == "right"){x++;}
         else if(sstr[0] == "left") {x--;}
         else if(sstr[0] == "up"){y--;}
         else if(sstr[0] == "down") {y++;}
         var img = new Image();
         img.src = "img\\"+sstr[0]+".png";
-        img.onload = function(){cont.drawImage(img,x,y,30,30);}
+        img.onload = function(){
+            context2.clearRect(x-1,y-1,50,50);
+            context2.drawImage(img,x,y,30,30);
+        }
         }, (animCounter)*(str[2]),str);
     }
  }
@@ -233,11 +263,41 @@ function doSomethingUseful() {
      if($("#debugArea").css("display") == "none"){
         $("#debugArea").css("display","block");
         $("#canvas").css("display","none");
+        $("#canvas2").css("display","none");
         $("#consoleButton").html("<img src = '/img/up.png' width = '16px' style = 'padding-right:4px'>Графика");
      }else{
         $("#debugArea").css("display","none");
         $("#canvas").css("display","block");
+        $("#canvas2").css("display","block");
         $("#consoleButton").html("<img src = '/img/console.webp' width = '16px' style = 'padding-right:4px'>Консоль");
      }
  }
 $("#debugArea").css("display","none");
+
+var xx = 0;
+var yy = 90;
+function funcff(ang,forward){
+    var w = Math.round(Math.sin(ang*Math.PI/180)*forward);
+    var h = Math.round(Math.cos(ang*Math.PI/180)*forward);
+    var bool = true;
+    if(w<h) bool = false;
+    var otnoshenie = Math.round(Math.abs(w/h));
+    if(!bool) otnoshenie = Math.round(Math.abs(h/w));
+    var temp;
+    for(var i = 0; i < forward;i++){
+        if(bool){
+            if(otnoshenie == temp){
+                xx+= (w/h < 0)?-1:+1;
+                temp = 0;
+            }else temp++;
+            yy++;
+        }
+        if(!bool){
+            if(otnoshenie == temp){
+                yy++;
+                temp = 0;
+            }else temp++;
+            xx++;
+        }
+    }
+}

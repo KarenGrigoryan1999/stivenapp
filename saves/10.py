@@ -1,0 +1,10 @@
+import turtle
+a = int(input("пр"))
+t = turtle.Turtle(10)
+t.tracing(True)
+t.setcolor("blue")
+t.right(100)
+t.down(100)
+t.left(100)
+t.tracing(False)
+t.up(200)

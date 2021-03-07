@@ -1,4 +1,4 @@
-<?
+<?php
 $firstCode = "
 import sys
 arg_counter = 0

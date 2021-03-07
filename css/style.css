@@ -110,6 +110,14 @@ h3{
     width: 99%;
     height: 99%;
 }
+#canvas2{
+    position: absolute;
+    top: 22px;
+    left: 0px;
+    width: 99%;
+    height: 99%;
+    z-index: 100;
+}
 #turl{
     width: 99%;
     height: 99%;
@@ -129,4 +137,14 @@ min-width: 200px;
 #leftPanel{
     width: 100%;
 }
+}
+#autocomplite{
+    width: 100px;
+    height: 100px;
+    position:absolute;
+    display: none;
+    border: 1px solid black;
+    top: 10px;
+    left: 5px;
+    background: white;
 }

@@ -5,6 +5,7 @@
         var ent = 0;
         var tab = 0;
         var wqw = false;
+
         codeArea.onclick = function(){
             enter = false;
             space = false;
@@ -36,7 +37,6 @@
                 e.preventDefault();
                 createTab();
             }
-            codeAreaLength = codeArea.innerText.length;
           });
 
 
@@ -44,6 +44,7 @@
 
         codeArea.onkeyup = function(e){    
             //alert(e.keyCode);
+            codeAreaLength = codeArea.innerText.length;
             if(e.keyCode == 13){ ent++;
             if(ent > 0 && tab > 0){
                 for(let i = 0; i < tab; i++){
@@ -52,7 +53,7 @@
             }
         }
             if(e.keyCode == 8 && tab > 0){tab = 0;}
-            if(e.keyCode != 37 && e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 37
+            if(e.keyCode != 18 && e.keyCode != 37 && e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 37
             && e.keyCode != 13 && e.keyCode != 8 && e.keyCode != 16 && (e.keyCode != 17 && e.keyCode != 65)
             && (e.keyCode != 90 && e.keyCode != 17)&& (e.keyCode != 88 && e.keyCode != 17) && (e.keyCode != 67 && e.keyCode != 17)){ 
             if(e.keyCode != 13 && e.keyCode != 32) enter = false;         
@@ -67,6 +68,7 @@
             codeArea.innerHTML = codeArea.innerHTML.replace(/<div><br><\/div>/g,"<br>");
             setCurrentCursorPosition(pos+5);
             var code = codeArea.innerText;
+            //alert(code);
             var txt6 = [];
             txt6 = txt6.concat(code.match(/[0-9]/g));
             var trueFalse = code.match(/\bTrue|False\b/g);
@@ -76,66 +78,52 @@
                     code = code.replace(new RegExp(String.raw`${txt6[i]}`,'g'),"<span class ='numbers'>"+txt6[i]+"</span>").replace(/\n/g,"<br>").replace(/<div>/g,"").replace(/<\/div>/g,"");
                 } 
             }
-            //alert(code);
-            var txt4 = code.match(/#.*?(?=\<br\>)/g);
-            //console.log(code);
-            console.log(txt4);
-            if(txt4 != null){
-                for(var i = 0; i < txt4.length; i++){
-                    code = code.replace(new RegExp(String.raw`${txt4[i]}`,'g'),"<span class ='comment'>"+txt4[i]+"</span>").replace(/\n/g,"<br>").replace(/<div>/g,"").replace(/<\/div>/g,"");
-                } 
-            }
-            /*var txt2 = code.match(/\b([A-Za-z]){1}[^\(\)\>\<\s\+\-\*\.]*?(?=\()/g);
-            if(txt2 != null){
-                for(var i = 0; i < txt2.length; i++){
-                    code = code.replace(new RegExp(String.raw`${txt2[i]}(?=\()`,'g'),"<span class ='func'>"+txt2[i]+"</span>").replace(/\n/g,"<br>").replace(/<div>/g,"").replace(/<\/div>/g,"");
-                } 
-            }*/
             var txt3 = [];
             txt3 = txt3.concat(code.match(/\bfor\b/g));
-            /*let inCycle = code.match(/\bin\b/g);
-            let ifCycle = code.match(/\bif\b/g);
-            let defFunc = code.match(/\bdef\b/g);
-            let importLib = code.match(/\bimport\b/g);
-            let elseCycle = code.match(/\belse\b/g);
-            let whileCycle = code.match(/\bwhile\b/g);
-            let breakCycle = code.match(/\bbreak\b/g);
-            let fromLib = code.match(/\bfrom\b/g);
-            let asLib = code.match(/\bas\b/g);
-            //let printIO = code.match(/\bprint\b/g);*/
             let inputIO = code.match(/\b(from|as|break|while|else|import|def|if|in|print|input|range)\b/g);
-            /*if(elseCycle != null) txt3 = txt3.concat(elseCycle);
-            if(inCycle != null) txt3 = txt3.concat(inCycle);
-            if(ifCycle!=null) txt3 = txt3.concat(ifCycle);
-            if(defFunc != null) txt3 = txt3.concat(defFunc);
-            if(importLib != null) txt3 = txt3.concat(importLib);
-            if(fromLib != null) txt3 = txt3.concat(fromLib);
-            if(asLib != null) txt3 = txt3.concat(asLib);
-            if(whileCycle != null) txt3 = txt3.concat(whileCycle);
-            if(breakCycle != null) txt3 = txt3.concat(breakCycle);*/
             if(inputIO != null) txt3 = txt3.concat(inputIO);
             if(txt3 != null){
                 for(var i = 0; i < txt3.length; i++){
                     code = code.replace(new RegExp(String.raw`\b${txt3[i]}\b`,'g'),"<span class ='func'>"+txt3[i]+"</span>").replace(/\n/g,"<br>").replace(/<div>/g,"").replace(/<\/div>/g,"");
                 } 
             }
+            //alert(code);
             var txt1 = [];
-            txt1 = txt1.concat(code.match(/\".*?\"/g));
-            let variant2 = code.match(/\'\'\'[^\=]*?\'\'\'(?!\>)/g);
-            //let variant3 = code.match(/\"\"\"[^\=]*?\"\"\"(?!\>)/g);
-            if(variant2 != null) txt1 = txt1.concat(variant2);
-            //if(variant3 != null) txt1 = txt1.concat(variant3);       
-            if(txt1[0] == null) txt1 = variant2;       
+            txt1 = txt1.concat(code.match(/\".*?\"/g));      
             if(txt1 != null && txt1[0] != null){
                 for(var i = 0; i < txt1.length; i++){
                     let removeHTML = txt1[i].replace(/\<span.*?\>/g,"");
-                    removeHTML = removeHTML.replace(/<\/span>/g,"");               
+                    removeHTML = removeHTML.replace(/<\/span>/g,"");
+                    txt1[i] = txt1[i].replace(/\(/g,"\\(").replace(/\)/g,"\\)").replace(/\"/g,'\\"').replace(/\./g,'\\.').replace(/\=/g,'\\=');               
                     code = code.replace(new RegExp(String.raw`${txt1[i]}`,'g'),"<span class ='simpletext'>"+removeHTML+"</span>").replace(/\n/g,"<br>");
                 }
-            }        
-            if(txt1 != null || /*txt2 != null ||*/ txt3 != null || txt4 != null || txt6 != null){
+            }     
+            let variant2 = code.match(/\'\'\'[^\=].*?\'\'\'(?!\>)/g);
+            if(variant2 != null && variant2[0] != null){
+                for(var i = 0; i < variant2.length; i++){
+                    let removeHTML = variant2[i].replace(/\<span.*?\>/g,"");
+                    removeHTML = removeHTML.replace(/<\/span>/g,"");
+                    variant2[i] = variant2[i].replace(/\(/g,"\\(").replace(/\)/g,"\\)").replace(/\"/g,'\\"').replace(/\./g,'\\.').replace(/\=/g,'\\=');               
+                    code = code.replace(new RegExp(String.raw`${variant2[i]}`,'g'),"<span class ='simpletext'>"+removeHTML+"</span>").replace(/\n/g,"<br>");
+                }
+            } 
+            //alert(code);
+            var txt4 = code.match(/#.*?(?=\<br\>)/g);
+            //console.log(code);
+            console.log(txt4);
+            if(txt4 != null){
+                for(var i = 0; i < txt4.length; i++){
+                    let removeHTML = txt4[i].replace(/\<span.*?\>/g,"");
+                    removeHTML = removeHTML.replace(/<\/span>/g,"");
+                    txt4[i] = txt4[i].replace(/\(/g,"\\(").replace(/\)/g,"\\)").replace(/\"/g,'\\"').replace(/\./g,'\\.').replace(/\=/g,'\\=');  
+                    code = code.replace(new RegExp(String.raw`${txt4[i]}`,'g'),"<span class ='comment'>"+removeHTML+"</span>").replace(/\n/g,"<br>").replace(/<div>/g,"").replace(/<\/div>/g,"");
+                } 
+            }  
+            if(txt1 != null || /*txt2 != null ||*/ txt3 != null || txt4 != null || txt6 != null || variant2 != null){
                 let pos = getCaretCharacterOffsetWithin(codeArea);  
                 code = code.replace(/\<br\>\<br\>/g,"<br> <br>");
+                //code = code.replace(/\s/g," ");
+                //code = code.replace(/\s/g,"&ensp;");
                 codeArea.innerHTML = code;
                 //console.log(code+"\n---"+code.replace(/ <br><br>/g," <br>"));
                 if(ent > 1){
@@ -166,7 +154,9 @@
 
         }
         codeArea.oninput = function(){
-            if(codeArea.innerText.length>codeAreaLength+2)codeArea.onkeyup(0);
+            if(codeArea.innerText.length>codeAreaLength+2){
+                codeArea.onkeyup(0);
+            }
             if(codeArea.innerText.length==codeAreaLength+1){
                 codeAreaLength = codeArea.innerText.length+1;
                 if(getCharacterPrecedingCaret(codeArea) == '('){
@@ -190,6 +180,8 @@
                     setCurrentCursorPosition(pos+4);
                 }
             }
+            $("#autocomplite").css("top",$('#codeArea').caret('position')['top']);
+            $("#autocomplite").css("left",$('#codeArea').caret('position')['left']);
         }
 
         function insertAtCursor(myField, myValue) { 

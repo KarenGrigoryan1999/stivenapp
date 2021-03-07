@@ -12,7 +12,7 @@ if(isset($_COOKIE['login']) && isset($_COOKIE['password'])){
   <input class='form-control' type = 'password' name = 'password' value = $password>
   <br><input class='btn btn-primary' type = 'submit' value = 'Войти'>
 </form>
-<p>Впервые у нас? Тогда пройдите пожалуйста процедуру </p><a href = '\\registration.php'>регистрации</a>
+<p>Впервые у нас? Тогда пройдите пожалуйста процедуру <a href = '\\registration.php'>регистрации</a></p>
 ";?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,7 @@ if(isset($_COOKIE['login']) && isset($_COOKIE['password'])){
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Школа кода - ProgramKids</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
 </head>
